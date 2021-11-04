@@ -44,5 +44,19 @@ export default StyleSheet.create({
   priceStyle: {
     color: Colors.yellow,
     fontSize: 25
+  },
+  closeModalContainerStyle: {
+    position: 'absolute',
+    elevation: 999,
+    zIndex: 999,
+    top: 40,
+    right: 30,
+    backgroundColor: '#D32626',
+    borderRadius: 5
+  },
+  closeModalStyle: {
+    fontWeight: 'bold',
+    color: '#fff',
+    padding: 10
   }
 })

@@ -9,7 +9,7 @@ import style from './style'
 import burgerpng from '../../assets/burger.png'
 
 const Card = ({ photo, checkout, title, price, description, handlePress }) => {
-  const { root, imageStyle, topSection, bottomSection, titleStyle, descriptionStyle, priceStyle } = style
+  const { root, imageStyle, topSection, closeModalContainerStyle, closeModalStyle, bottomSection, titleStyle, descriptionStyle, priceStyle } = style
   return (
     <Pressable style={root(checkout)} onPress={handlePress}>
       <View style={topSection}>
@@ -20,6 +20,10 @@ const Card = ({ photo, checkout, title, price, description, handlePress }) => {
         <Text style={descriptionStyle}>{description}</Text>
         <Text style={priceStyle}>{price} MAD</Text>
       </View>
+      {checkout && (
+        <Pressable style={closeModalContainerStyle}>
+          <Text style={closeModalStyle}>X</Text>
+        </Pressable>)}
     </Pressable>
   )
 }
