@@ -38,7 +38,7 @@ const CheckoutModal = ({ modalVisible, setModalVisible }) => {
           </Pressable>
           <Text style={titleStyle}>Checkout</Text>
           <ScrollView style={{ marginBottom: 100, width: '100%' }}>
-            <View style={{ width: '96%', flexWrap: 'wrap', padding: 12, flexDirection: 'row', justifyContent: 'flex-start', flex: 1, height: '100%', marginBottom: 15 }}>
+            <View style={{ width: '100%', flexWrap: 'wrap', padding: 12, flexDirection: 'row', justifyContent: 'flex-start', flex: 1, height: '100%', marginBottom: 15 }}>
               <Card
                 title='Cheeseburger'
                 photo='https://toppng.com/uploads/preview/cocktail-glass-png-transparent-image-transparent-background-cocktail-drink-11563021490bpu501vqnr.png'
