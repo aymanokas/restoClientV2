@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native'
-import { Colors } from '../../constants'
 
 export default StyleSheet.create({
   root: {
@@ -10,8 +9,15 @@ export default StyleSheet.create({
     width: 250
   },
   rightSection: {
-    width: 860,
+    width: '80%',
     marginTop: 50,
     marginLeft: 25
+  },
+  cardsContainer: {
+    width: '100%',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex'
   }
 })

@@ -8,10 +8,10 @@ import {
 import style from './style'
 import burgerpng from '../../assets/burger.png'
 
-const Card = ({ photo, title, price, description, handlePress }) => {
-  const { root, imageStyle, topSection, bottomSection, titleStyle, descriptionStyle, priceStyle  } = style
+const Card = ({ photo, checkout, title, price, description, handlePress }) => {
+  const { root, imageStyle, topSection, bottomSection, titleStyle, descriptionStyle, priceStyle } = style
   return (
-    <Pressable style={root} onPress={handlePress}>
+    <Pressable style={root(checkout)} onPress={handlePress}>
       <View style={topSection}>
         <Image style={imageStyle} source={burgerpng} />
       </View>

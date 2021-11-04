@@ -2,15 +2,17 @@ import { StyleSheet } from 'react-native'
 import { Colors } from '../../constants'
 
 export default StyleSheet.create({
-  root: {
+  root: (checkout) => ({
     flexDirection: 'column',
     paddingVertical: 60,
     paddingHorizontal: 40,
+    width: checkout ? '40%' : '22%',
+    margin: 16,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 40,
     marginRight: 10,
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     shadowColor: '#0000004a',
     shadowOffset: {
       width: 0,
@@ -18,9 +20,8 @@ export default StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 15,
-
     elevation: 20
-  },
+  }),
   topSection: {
     marginBottom: 15
   },
