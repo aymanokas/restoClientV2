@@ -41,7 +41,7 @@ const ProductModal = ({ modalVisible, setModalVisible, title, description, price
       }}
     >
       <View style={modalBody}>
-        <View style={leftSection} />
+        <Pressable onPress={() => setModalVisible(!modalVisible)} style={leftSection} />
         <View style={rightSection}>
           <Pressable style={closeModalContainerStyle} onPress={() => setModalVisible(!modalVisible)}>
             <Text style={closeModalStyle}>X</Text>
