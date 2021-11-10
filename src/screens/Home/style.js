@@ -9,7 +9,7 @@ export default StyleSheet.create({
     width: 250
   },
   rightSection: {
-    width: '80%',
+    width: '75%',
     marginTop: 50,
     marginLeft: 25
   },

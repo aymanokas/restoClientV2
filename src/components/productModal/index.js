@@ -8,7 +8,9 @@ import {
   Pressable,
   ScrollView
 } from 'react-native'
-import burgerpng from '../../assets/burger.png'
+import { useSelector, useDispatch } from 'react-redux'
+import uuid from 'react-native-uuid'
+import { addProductAction } from '../../store/Checkout'
 
 const ProductModal = ({ modalVisible, setModalVisible, title, description, price, variableName }) => {
   const {
@@ -31,6 +33,16 @@ const ProductModal = ({ modalVisible, setModalVisible, title, description, price
     variablesRoot,
     scrollViewVariables
   } = style
+  const dispatch = useDispatch()
+  const plate = useSelector(state => state.Menu?.selectedPlate)
+  const handleAddProduct = p => {
+    p = {
+      ...p,
+      id: uuid.v4(),
+      selectedVariables: []
+    }
+    dispatch(addProductAction(p))
+  }
   return (
     <Modal
       animationType='fade'
@@ -47,52 +59,24 @@ const ProductModal = ({ modalVisible, setModalVisible, title, description, price
             <Text style={closeModalStyle}>X</Text>
           </Pressable>
           <View style={topSection}>
-            <Image style={productImg} source={burgerpng} />
-            <Text style={titleStyle}>{title}</Text>
-            <Text style={descriptionStyle}>{description}</Text>
-            <Text style={priceStyle}>{price} MAD</Text>
+            <Image style={productImg} source={{ uri: plate.image }} />
+            <Text style={titleStyle}>{plate.title}</Text>
+            <Text style={descriptionStyle}>{plate.description}</Text>
+            <Text style={priceStyle}>{plate.price} MAD</Text>
             <ScrollView style={scrollViewVariables}>
               <View style={variablesRoot}>
-                <View style={row}>
-                  <Pressable style={variableContainer}>
-                    <Text style={variableNameStyle}>{variableName}</Text>
-                  </Pressable>
-                </View>
-                <View style={row}>
-                  <Pressable style={variableContainer}>
-                    <Text style={variableNameStyle}>{variableName}</Text>
-                  </Pressable>
-                </View>
-                <View style={row}>
-                  <Pressable style={variableContainer}>
-                    <Text style={variableNameStyle}>{variableName}</Text>
-                  </Pressable>
-                </View>
-                <View style={row}>
-                  <Pressable style={variableContainer}>
-                    <Text style={variableNameStyle}>{variableName}</Text>
-                  </Pressable>
-                </View>
-                <View style={row}>
-                  <Pressable style={variableContainer}>
-                    <Text style={variableNameStyle}>{variableName}</Text>
-                  </Pressable>
-                </View>
-                <View style={row}>
-                  <Pressable style={variableContainer}>
-                    <Text style={variableNameStyle}>{variableName}</Text>
-                  </Pressable>
-                </View>
-                <View style={row}>
-                  <Pressable style={variableContainer}>
-                    <Text style={variableNameStyle}>{variableName}</Text>
-                  </Pressable>
-                </View>
+                {plate.variables?.map((v, i) => (
+                  <View key={i} style={row}>
+                    <Pressable style={variableContainer}>
+                      <Text style={variableNameStyle}>{v}</Text>
+                    </Pressable>
+                  </View>
+                ))}
               </View>
             </ScrollView>
           </View>
           <View style={bottomSection}>
-            <Pressable style={addProductButton}>
+            <Pressable onPress={() => handleAddProduct(plate)} style={addProductButton}>
               <Text style={addProdcutTextStyle}>Add Product</Text>
             </Pressable>
           </View>

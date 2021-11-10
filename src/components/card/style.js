@@ -6,7 +6,7 @@ export default StyleSheet.create({
     flexDirection: 'column',
     paddingVertical: 60,
     paddingHorizontal: 40,
-    width: checkout ? '48%' : '22%',
+    width: checkout ? '45%' : '30%',
     margin: 16,
     alignItems: 'center',
     justifyContent: 'center',

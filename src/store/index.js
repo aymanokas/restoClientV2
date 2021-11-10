@@ -8,13 +8,14 @@ import { reducer as Menu } from './Menu'
 import { reducer as Checkout } from './Checkout'
 
 const reducers = {
-
+  Menu,
+  Checkout
 }
 
 const rootReducer = persistCombineReducers({
   key: 'root',
   storage: AsyncStorage,
-  blacklist: []
+  blacklist: ['Menu']
 }, reducers)
 
 const sagaMiddleware = createSagaMiddleware()

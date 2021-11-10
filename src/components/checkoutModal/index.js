@@ -8,6 +8,8 @@ import {
   ScrollView
 } from 'react-native'
 import Card from '../card'
+import { addProductAction, removeProductAction } from '../../store/Checkout'
+import { useSelector, useDispatch } from 'react-redux'
 
 const CheckoutModal = ({ modalVisible, setModalVisible }) => {
   const {
@@ -21,6 +23,12 @@ const CheckoutModal = ({ modalVisible, setModalVisible }) => {
     closeModalContainerStyle,
     closeModalStyle
   } = style
+  const dispatch = useDispatch()
+  const order = useSelector(state => state.Checkout.order)
+  const handleRemoveProduct = (p) => {
+    const filteredOrder = order.filter((o, i) => o.id !== p.id)
+    dispatch(removeProductAction(filteredOrder))
+  }
   return (
     <Modal
       animationType='fade'

@@ -1,24 +1,46 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Layout from '../../components/layout'
 import {
   Text,
-  View,
-  ScrollView
+  View
 } from 'react-native'
 import Sidenav from '../../components/sideNav'
 import Breadcrumb from '../../components/breadcrumb'
-import Card from '../../components/card'
 import style from './style'
 import CheckoutButton from '../../components/checkoutButton'
 import ProductModal from '../../components/productModal'
 import CheckoutModal from '../../components/checkoutModal'
+import ProductsDrawer from '../../components/ProductsDrawer'
+import { useSocket } from '../../core/Socket'
+import { useSelector, useDispatch } from 'react-redux'
+import { getMenuAction } from '../../store/Menu'
 
 const Home = () => {
   const { root, leftSection, rightSection } = style
+  const dispatch = useDispatch()
+  const socket = useSocket()
+  const [socketStatus, setSocketStatus] = useState(false)
   const [modalProductVisible, setModalProductVisible] = useState(false)
   const [modalCheckoutVisible, setModalCheckoutVisible] = useState(false)
+  const Menu = useSelector(state => state.Menu?.items)
+  const selectedCategorie = useSelector(state => state.Menu?.selectedCategorie)
+  useEffect(() => {
+    if (socket) {
+      setSocketStatus(socket.connected)
+    }
+  }, [socket])
+  useEffect(() => {
+    if (socket) {
+      console.log('heeeeeere')
+      socket.emit('menu', {}, (m) => {
+        console.log('Menu Socket : ', m)
+        dispatch(getMenuAction(m))
+        // setIsLoadingMenu(false)
+      })
+    }
+  }, [socket])
   return (
-    <Layout>
+    <Layout isConnected={socketStatus}>
       <ProductModal
         modalVisible={modalProductVisible}
         setModalVisible={setModalProductVisible}
@@ -47,56 +69,7 @@ const Home = () => {
           <View style={{ height: 40 }} />
           <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Burgers</Text>
           <View style={{ height: 40 }} />
-          <ScrollView style={{ marginBottom: 100, width: '100%' }}>
-            <View style={{ width: '96%', flexWrap: 'wrap', padding: 12, flexDirection: 'row', justifyContent: 'flex-start', flex: 1, height: '100%', marginBottom: 15 }}>
-              <Card
-                title='Cheeseburger'
-                photo='https://toppng.com/uploads/preview/cocktail-glass-png-transparent-image-transparent-background-cocktail-drink-11563021490bpu501vqnr.png'
-                price={69.5}
-                description='hot & cold'
-                handlePress={() => setModalProductVisible(true)}
-              />
-              <Card
-                title='Cheeseburger'
-                photo='https://toppng.com/uploads/preview/cocktail-glass-png-transparent-image-transparent-background-cocktail-drink-11563021490bpu501vqnr.png'
-                price={69.5}
-                description='hot & cold'
-                handlePress={() => setModalProductVisible(true)}
-              />
-              <Card
-                title='Cheeseburger'
-                photo='https://toppng.com/uploads/preview/cocktail-glass-png-transparent-image-transparent-background-cocktail-drink-11563021490bpu501vqnr.png'
-                price={69.5}
-                description='hot & cold'
-                handlePress={() => setModalProductVisible(true)}
-              />
-              <Card
-                title='Cheeseburger'
-                photo='https://toppng.com/uploads/preview/cocktail-glass-png-transparent-image-transparent-background-cocktail-drink-11563021490bpu501vqnr.png'
-                price={69.5}
-                description='hot & cold'
-                handlePress={() => setModalProductVisible(true)}
-              />
-              <Card
-                title='Cheeseburger'
-                photo='https://toppng.com/uploads/preview/cocktail-glass-png-transparent-image-transparent-background-cocktail-drink-11563021490bpu501vqnr.png'
-                price={69.5}
-                description='hot & cold'
-              />
-              <Card
-                title='Cheeseburger'
-                photo='https://toppng.com/uploads/preview/cocktail-glass-png-transparent-image-transparent-background-cocktail-drink-11563021490bpu501vqnr.png'
-                price={69.5}
-                description='hot & cold'
-              />
-              <Card
-                title='Cheeseburger'
-                photo='https://toppng.com/uploads/preview/cocktail-glass-png-transparent-image-transparent-background-cocktail-drink-11563021490bpu501vqnr.png'
-                price={69.5}
-                description='hot & cold'
-              />
-            </View>
-          </ScrollView>
+          <ProductsDrawer setModalProductVisible={setModalProductVisible} category={Menu[selectedCategorie]} />
         </View>
       </View>
     </Layout>

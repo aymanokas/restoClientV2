@@ -21,11 +21,18 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  serverStatus: {
+  serverStatusOn: {
     borderRadius: 20,
     height: 15,
     width: 15,
     backgroundColor: 'green',
+    marginRight: 10
+  },
+  serverStatusOff: {
+    borderRadius: 20,
+    height: 15,
+    width: 15,
+    backgroundColor: 'red',
     marginRight: 10
   },
   serverStatusText: {
