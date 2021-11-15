@@ -28,7 +28,7 @@ export const useSocket = () => {
   useEffect(async () => {
     for (let index = 1; index <= 255; index++) {
       try {
-        const result = await connectAsync(`http://192.168.1.13:3000`, setSocket)
+        const result = await connectAsync(`http://192.168.1.${index}:3000`, setSocket)
         setSocket(result)
         console.log(result)
         break

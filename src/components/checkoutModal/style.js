@@ -27,10 +27,6 @@ export default StyleSheet.create({
     borderTopLeftRadius: 30,
     borderBottomLeftRadius: 30
   },
-  row: {
-    flexDirection: 'row',
-    marginBottom: 10
-  },
   productImg: {
     height: 200,
     width: 300,
@@ -53,12 +49,22 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 40
   },
-  topSection: {
-    alignItems: 'center'
-  },
   bottomSection: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'space-between',
+    paddingBottom: 20,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    backgroundColor: 'white',
+    width: '100%',
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: -10
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
+    elevation: 20
   },
   addProductButton: {
     paddingHorizontal: 150,
@@ -66,16 +72,26 @@ export default StyleSheet.create({
     borderRadius: 13,
     backgroundColor: Colors.yellow
   },
+  addProductButtonDisabled: {
+    paddingHorizontal: 150,
+    paddingVertical: 10,
+    borderRadius: 13,
+    backgroundColor: Colors.white
+  },
   addProdcutTextStyle: {
     color: 'black',
     fontSize: 15,
     fontWeight: 'bold'
   },
+  addProdcutTextStyleDisabled: {
+    color: 'black',
+    fontSize: 15
+  },
   closeModalContainerStyle: {
     position: 'absolute',
     elevation: 999,
     zIndex: 999,
-    top: 40,
+    top: 25,
     right: 30,
     backgroundColor: '#80808026',
     borderRadius: 5
@@ -84,18 +100,24 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     padding: 10
   },
-  variableContainer: {
+  checkboxContainer: {
+    flexDirection: 'row',
+    marginRight: 10,
+    alignItems: 'center'
+  },
+  checkbox: {
+    alignSelf: 'center',
+    width: 25,
+    height: 25
+  },
+  checkboxLabel: {
+    margin: 8,
+    color: 'black'
+  },
+  input: {
     borderWidth: 1,
-    paddingHorizontal: 20,
-    paddingVertical: 5,
-    borderRadius: 10
-  },
-  scrollViewVariables: {
-    maxHeight: '30%'
-  },
-  variablesRoot: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: 300
+    padding: 5,
+    backgroundColor: 'white',
+    width: 50
   }
 })

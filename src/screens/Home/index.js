@@ -14,6 +14,8 @@ import ProductsDrawer from '../../components/ProductsDrawer'
 import { useSocket } from '../../core/Socket'
 import { useSelector, useDispatch } from 'react-redux'
 import { getMenuAction } from '../../store/Menu'
+import Loader from '../../components/Loader'
+import Snackbar from 'react-native-snackbar'
 
 const Home = () => {
   const { root, leftSection, rightSection } = style
@@ -22,20 +24,28 @@ const Home = () => {
   const [socketStatus, setSocketStatus] = useState(false)
   const [modalProductVisible, setModalProductVisible] = useState(false)
   const [modalCheckoutVisible, setModalCheckoutVisible] = useState(false)
+  const [isLoadingSocket, setIsLoadingSocket] = useState(true)
+  const [isLoadingMenu, setIsLoadingMenu] = useState(true)
+  const order = useSelector(state => state.Checkout.order)
   const Menu = useSelector(state => state.Menu?.items)
   const selectedCategorie = useSelector(state => state.Menu?.selectedCategorie)
   useEffect(() => {
     if (socket) {
       setSocketStatus(socket.connected)
+      setIsLoadingSocket(false)
+      Snackbar.show({
+        text: 'Connected Successfully',
+        duration: Snackbar.LENGTH_SHORT,
+        backgroundColor: 'green'
+      })
     }
   }, [socket])
   useEffect(() => {
     if (socket) {
-      console.log('heeeeeere')
       socket.emit('menu', {}, (m) => {
         console.log('Menu Socket : ', m)
         dispatch(getMenuAction(m))
-        // setIsLoadingMenu(false)
+        setIsLoadingMenu(false)
       })
     }
   }, [socket])
@@ -59,17 +69,25 @@ const Home = () => {
       />
       <View style={root}>
         <View style={leftSection}>
-          <Sidenav />
+          <Sidenav isLoadingMenu={isLoadingMenu} />
         </View>
         <View style={rightSection}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Breadcrumb />
-            <CheckoutButton handlePress={() => { setModalCheckoutVisible(true) }} title='Checkout' />
-          </View>
-          <View style={{ height: 40 }} />
-          <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Burgers</Text>
-          <View style={{ height: 40 }} />
-          <ProductsDrawer setModalProductVisible={setModalProductVisible} category={Menu[selectedCategorie]} />
+          {!isLoadingSocket
+            ? <>
+              {!isLoadingMenu
+                ? <>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Breadcrumb />
+                    {order.length ? <CheckoutButton handlePress={() => { setModalCheckoutVisible(true) }} title='Checkout' /> : null}
+                  </View>
+                  <View style={{ height: 40 }} />
+                  <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Burgers</Text>
+                  <View style={{ height: 40 }} />
+                  <ProductsDrawer setModalProductVisible={setModalProductVisible} category={Menu[selectedCategorie]} />
+                  </>
+                : <Loader message='Loading Menu...' />}
+              </>
+            : <Loader message='Connecting to server...' />}
         </View>
       </View>
     </Layout>

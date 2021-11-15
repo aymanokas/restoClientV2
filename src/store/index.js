@@ -15,7 +15,7 @@ const reducers = {
 const rootReducer = persistCombineReducers({
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['Menu']
+  blacklist: ['Menu', 'Checkout']
 }, reducers)
 
 const sagaMiddleware = createSagaMiddleware()

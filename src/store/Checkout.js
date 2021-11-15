@@ -32,7 +32,8 @@ export const removeProductAction = (data) => ({ type: REMOVE_PRODUCT_REQUESTED, 
 export const confirmOrderAction = (data) => ({ type: CONFIRM_ORDER_REQUESTED, data })
 export const setVariablesAction = (data) => ({ type: SET_VARIABLES_REQUESTED, data })
 
-function * addProduct ({ data }) {
+function* addProduct({ data }) {
+  console.log('store :', data)
   yield put({ type: ADD_PRODUCT, data })
 }
 

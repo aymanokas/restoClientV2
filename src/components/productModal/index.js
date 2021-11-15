@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './style'
 import {
   View,
@@ -9,8 +9,9 @@ import {
   ScrollView
 } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import uuid from 'react-native-uuid'
 import { addProductAction } from '../../store/Checkout'
+import Snackbar from 'react-native-snackbar'
+import uuid from 'react-native-uuid'
 
 const ProductModal = ({ modalVisible, setModalVisible, title, description, price, variableName }) => {
   const {
@@ -31,17 +32,39 @@ const ProductModal = ({ modalVisible, setModalVisible, title, description, price
     closeModalContainerStyle,
     closeModalStyle,
     variablesRoot,
-    scrollViewVariables
+    scrollViewVariables,
+    variableContainerActive
   } = style
   const dispatch = useDispatch()
   const plate = useSelector(state => state.Menu?.selectedPlate)
+  const [plateToAdd, setPlateToAdd] = useState({})
+  useEffect(() => { setPlateToAdd(plate) }, [plate])
+  useEffect(() => console.log('plateToAdd : ', plateToAdd, [plateToAdd]))
   const handleAddProduct = p => {
-    p = {
-      ...p,
-      id: uuid.v4(),
-      selectedVariables: []
+    const plateWithId = {
+      ...plateToAdd,
+      id: uuid.v4()
     }
-    dispatch(addProductAction(p))
+    dispatch(addProductAction(plateWithId))
+    setModalVisible(false)
+    Snackbar.show({
+      text: `${p.title} Added`,
+      duration: Snackbar.LENGTH_SHORT,
+      backgroundColor: 'green'
+    })
+  }
+  const handleSetVariable = (obj) => {
+    const variableToAdd = obj.selectedVariables
+    const variableExist = plateToAdd.selectedVariables.includes(variableToAdd)
+    console.log('variableExist : ', variableExist)
+    const newSelectedVariables = variableExist
+      ? plateToAdd.selectedVariables.filter((s, index) => s !== variableToAdd)
+      : [...plateToAdd.selectedVariables, variableToAdd]
+    const plateWithVariables = {
+      ...obj.plate,
+      selectedVariables: newSelectedVariables
+    }
+    setPlateToAdd(plateWithVariables)
   }
   return (
     <Modal
@@ -67,7 +90,11 @@ const ProductModal = ({ modalVisible, setModalVisible, title, description, price
               <View style={variablesRoot}>
                 {plate.variables?.map((v, i) => (
                   <View key={i} style={row}>
-                    <Pressable style={variableContainer}>
+                    <Pressable
+                      style={plateToAdd?.selectedVariables?.includes(v) ? variableContainerActive : variableContainer} onPress={() => {
+                        handleSetVariable({ plate: plate, selectedVariables: v })
+                      }}
+                    >
                       <Text style={variableNameStyle}>{v}</Text>
                     </Pressable>
                   </View>

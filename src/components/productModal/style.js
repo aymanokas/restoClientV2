@@ -89,6 +89,13 @@ export default StyleSheet.create({
     paddingVertical: 5,
     borderRadius: 10
   },
+  variableContainerActive: {
+    borderWidth: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    borderRadius: 10,
+    backgroundColor: Colors.yellow
+  },
   scrollViewVariables: {
     maxHeight: '30%'
   },

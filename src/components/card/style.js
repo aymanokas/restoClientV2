@@ -46,13 +46,13 @@ export default StyleSheet.create({
     fontSize: 25
   },
   closeModalContainerStyle: {
+    borderTopRightRadius: 40,
     position: 'absolute',
     elevation: 999,
     zIndex: 999,
-    top: 40,
-    right: 30,
-    backgroundColor: '#D32626',
-    borderRadius: 5
+    top: 0,
+    right: 0,
+    backgroundColor: '#D32626'
   },
   closeModalStyle: {
     fontWeight: 'bold',

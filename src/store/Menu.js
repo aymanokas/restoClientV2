@@ -33,7 +33,16 @@ export const setActiveCategoryAction = (data) => ({ type: SET_ACTIVE_CATEGORY_RE
 export const setSelectedPlateAction = (data) => ({ type: SET_SELECTED_PLATE_REQUESTED, data })
 
 function * getMenu ({ data }) {
-  yield put({ type: GET_MENU_SUCCESS, data })
+  const formatedData = data.map((d, index) => {
+    d.products = d.products.map((p, i) => {
+      return {
+        ...p,
+        selectedVariables: []
+      }
+    })
+    return d
+  })
+  yield put({ type: GET_MENU_SUCCESS, data: formatedData })
 }
 
 function * setActiveCategory ({ data }) {
@@ -48,7 +57,6 @@ export function * MenuRootSaga () {
   yield takeLatest(GET_MENU_REQUESTED, getMenu)
   yield takeLatest(SET_ACTIVE_CATEGORY_REQUESTED, setActiveCategory)
   yield takeLatest(SET_SELECTED_PLATE_REQUESTED, setSelectedPlate)
-
 }
 
 const GET_MENU_SUCCESS = 'GET_MENU_SUCCESS'
